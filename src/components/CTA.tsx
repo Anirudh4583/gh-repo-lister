@@ -14,9 +14,10 @@ import {
   InputRightElement,
   InputGroup,
   Kbd,
+  Spinner,
 } from "@chakra-ui/react";
 import { useUser } from "contexts/user";
-import BlurredBg from "./UI/BlurredBg";
+import BlurredBg from "./BlurredBg";
 
 const avatars = [
   {
@@ -42,6 +43,8 @@ const avatars = [
 ];
 
 export default function CTA() {
+  const { setUsername, fetchUserData, isLoading, userData } = useUser();
+
   return (
     <Box position={"relative"}>
       <Container
@@ -150,7 +153,14 @@ export default function CTA() {
               Github repositories & present 'em in an easy-to-comprehend view.
             </Text>
           </Stack>
-          <Box as={"form"} mt={10}>
+          <Box
+            as={"form"}
+            mt={10}
+            onSubmit={(e: any) => {
+              e.preventDefault();
+              fetchUserData();
+            }}
+          >
             <Stack spacing={4}>
               <InputGroup>
                 <Input
@@ -162,6 +172,9 @@ export default function CTA() {
                     color: "gray.500",
                   }}
                   required
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                  }}
                 />
                 <InputRightElement width="4.5rem" color={"gray.700"}>
                   <Button h="1.75rem" size="sm">
@@ -182,7 +195,7 @@ export default function CTA() {
                 boxShadow: "xl",
               }}
             >
-              Submit
+              {isLoading ? <Spinner /> : userData ? "Redirecting..." : "Search"}
             </Button>
           </Box>
           form
@@ -190,7 +203,6 @@ export default function CTA() {
       </Container>
 
       <BlurredBg
-        zIndex={1}
         position={"absolute"}
         top={-10}
         left={-10}
