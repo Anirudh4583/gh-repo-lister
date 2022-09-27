@@ -1,6 +1,5 @@
 import { Container } from "components/Container";
 import CTA from "components/CTA";
-import withUserProvider from "contexts/withUserProvider";
 
 const Index = () => (
   <Container height="90vh">
@@ -8,4 +7,4 @@ const Index = () => (
   </Container>
 );
 
-export default withUserProvider(Index);
+export default Index;
