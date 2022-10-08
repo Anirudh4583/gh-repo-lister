@@ -21,7 +21,7 @@ export default (
     const fetchRepoData = async () => {
       setIsLoading(true);
       const response = await fetch(
-        `https://api.github.com/users/${username}/repos?per_page=10&page=${repoIdx}`
+        `https://api.github.com/users/${username}/repos?per_page=6&page=${repoIdx}`
       );
       const data = await response.json();
       setRepoData(data);
@@ -61,6 +61,7 @@ export default (
           isLoading,
           // # Methods #
           setUsername,
+          setUserData,
           fetchUserData,
         }}
       >

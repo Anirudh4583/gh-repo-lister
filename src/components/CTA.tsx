@@ -17,6 +17,7 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { useUser } from "contexts/user";
+import { useEffect } from "react";
 import BlurredBg from "./BlurredBg";
 
 const avatars = [
@@ -43,7 +44,12 @@ const avatars = [
 ];
 
 export default function CTA() {
-  const { setUsername, fetchUserData, isLoading, userData } = useUser();
+  const { setUsername, fetchUserData, isLoading, userData, setUserData } =
+    useUser();
+
+  useEffect(() => {
+    setUserData(null);
+  }, []);
 
   return (
     <Box position={"relative"}>
