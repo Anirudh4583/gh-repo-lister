@@ -13,9 +13,9 @@ export default function UserNotFound() {
       >
         404
       </Heading>
-      <Text fontSize="18px" mt={3} mb={2}>
+      {/* <Text fontSize="18px" mt={3} mb={2}>
         User Does Not Exist
-      </Text>
+      </Text> */}
       <Text color={"gray.500"} mb={6}>
         The user you're looking for either does not exist or the page is
         expired. Please try again.
