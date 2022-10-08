@@ -178,6 +178,7 @@ export default function CTA() {
                     color: "gray.500",
                   }}
                   required
+                  autoComplete="on"
                   onChange={(e) => {
                     setUsername(e.target.value);
                   }}

@@ -6,6 +6,7 @@ import {
   GridItem,
   Icon,
   Link,
+  Spinner,
   Stack,
   Text,
 } from "@chakra-ui/react";
@@ -13,8 +14,9 @@ import Image from "next/image";
 import { MdLink, MdLocationOn } from "react-icons/md";
 import { FaTwitter } from "react-icons/fa";
 import RepoCard from "components/RepoCard";
+import PageBar from "./PageBar";
 
-function UserData({ userData, repoData }) {
+function UserData({ userData, repoData, isLoading }) {
   const { avatar_url, bio, html_url, name, location, twitter_username } =
     userData;
 
@@ -62,24 +64,36 @@ function UserData({ userData, repoData }) {
         </Link>
       </Flex>
 
-      <Box>
-        <Grid
-          templateColumns="repeat(2, 1fr)"
-          templateRows="repeat(1, 1fr)"
-          gap={2}
-        >
-          {repoData?.map((repo) => (
-            <GridItem key={repo.id} rowSpan={1} colSpan={1}>
-              <RepoCard
-                title={repo.name}
-                url={repo.html_url}
-                about={repo.description}
-                topics={repo.topics}
-              />
-            </GridItem>
-          ))}
-        </Grid>
-      </Box>
+      {isLoading ? (
+        <Stack h="50vh" w="100%" justify="center" alignItems="center">
+          <Spinner size="lg" color="#da70d6" />
+        </Stack>
+      ) : (
+        <Box>
+          <Grid
+            templateColumns="repeat(2, 1fr)"
+            templateRows="repeat(1, 1fr)"
+            gap={10}
+          >
+            {repoData?.map((repo) => (
+              <GridItem
+                key={repo.id}
+                rowSpan={1}
+                colSpan={1}
+                transition="ease-in 0.5s"
+              >
+                <RepoCard
+                  title={repo.name}
+                  url={repo.html_url}
+                  about={repo.description}
+                  topics={repo.topics}
+                />
+              </GridItem>
+            ))}
+          </Grid>
+        </Box>
+      )}
+      <PageBar />
     </Box>
   );
 }

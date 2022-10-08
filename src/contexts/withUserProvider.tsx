@@ -12,7 +12,7 @@ export default (
     const [isLoading, setIsLoading] = useState(false);
     const [username, setUsername] = useState<string | null>(null);
     const [userData, setUserData] = useState(null);
-    const [repoIdx, setRepoIdx] = useState(1);
+    const [pageIdx, setPageIdx] = useState(1);
     const [repoData, setRepoData] = useState(null);
     const router = useRouter();
 
@@ -21,7 +21,7 @@ export default (
     const fetchRepoData = async () => {
       setIsLoading(true);
       const response = await fetch(
-        `https://api.github.com/users/${username}/repos?per_page=6&page=${repoIdx}`
+        `https://api.github.com/users/${username}/repos?per_page=6&page=${pageIdx}`
       );
       const data = await response.json();
       setRepoData(data);
@@ -34,6 +34,7 @@ export default (
       const data = await response.json();
       await fetchRepoData();
       setUserData(data);
+      console.log(data);
       setIsLoading(false);
 
       setTimeout(() => {
@@ -42,12 +43,17 @@ export default (
     };
 
     const nextPage = async () => {
-      setRepoIdx((prev) => prev + 1);
+      setPageIdx((prev) => prev + 1);
       await fetchRepoData();
     };
 
     const prevPage = async () => {
-      setRepoIdx((prev) => prev - 1);
+      setPageIdx((prev) => prev - 1);
+      await fetchRepoData();
+    };
+
+    const setPage = async (idx) => {
+      setPageIdx(idx);
       await fetchRepoData();
     };
 
@@ -59,10 +65,14 @@ export default (
           userData,
           repoData,
           isLoading,
+          pageIdx,
           // # Methods #
           setUsername,
           setUserData,
           fetchUserData,
+          nextPage,
+          prevPage,
+          setPage,
         }}
       >
         <Component {...props} />

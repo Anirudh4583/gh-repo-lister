@@ -10,7 +10,7 @@ import Link from "next/link";
 import UserNotFound from "components/UserNotFound";
 
 function Details() {
-  const { userData, repoData } = useUser();
+  const { userData, repoData, isLoading } = useUser();
   const [error, setError] = useState(false);
 
   //TODO: check for data if it is null then redirect to home page
@@ -24,7 +24,11 @@ function Details() {
     <>
       {error && <UserNotFound />}
       {!error && userData && repoData && (
-        <UserData userData={userData} repoData={repoData} />
+        <UserData
+          userData={userData}
+          repoData={repoData}
+          isLoading={isLoading}
+        />
       )}
     </>
   );
